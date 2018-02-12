@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Insert title here</title>
+<!-- <link rel="stylesheet" th:href="@{css/select2.css}" /> -->
+<script th:src="@{js/jquery-3.2.1.min.js}"></script>
+
+<script type="text/javascript">
+	$(function() {
+		console.log($("#fox").text());
+		$.ajax({
+			type : "POST",
+			url :"http://127.0.0.1:8282/hello/cors",
+			dataType : 'json',
+			crossDomain : true,
+		    data: {
+				        name: "name_from_frontend"
+	    	},
+			xhrFields : {
+				withCredentials : true
+			},
+			success : function(response) {
+				console.log(response)
+				$("#fox").text(JSON.stringify(response));
+			}
+		});
+
+		
+		
+		console.log($("#box").text());
+		$.ajax({
+			type : "get",
+			url :"http://127.0.0.1:8181/hello/jsonp",
+			dataType: "jsonp",
+			success : function(jsonData) {
+				$("#box").text(jsonData.username+'--'+jsonData.password);
+			}
+		});
+
+
+    });
+</script>
+</head>
+<body>
+
+	<h1 id="box">Hello Ajax Jsonp!</h1>
+	<h1 id="fox">Hello Ajax CORS!</h1>
+
+</body>
+</html>
