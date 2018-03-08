@@ -37,9 +37,9 @@ public class EmpController {
     EmpServiceImpl empService;
 
     //测试nativeSQL
-    @RequestMapping("/test")
+    @RequestMapping("/q3")
     public void test01() {
-        this.empService.q1();
+        this.empService.q3();
     }
 
     //测试JPQL/HQL
@@ -187,7 +187,7 @@ public class EmpController {
 
     /**
      * http://127.0.0.1:8080/emp/join/getEmpDeptSQL?empNo=7369
-     * 
+     *
      * @param empNo
      * @return
      */

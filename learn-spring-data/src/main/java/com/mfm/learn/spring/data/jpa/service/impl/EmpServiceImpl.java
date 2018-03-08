@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.mfm.learn.spring.data.jpa.entity.Dept;
 import com.mfm.learn.spring.data.jpa.entity.Emp;
+import com.mfm.learn.spring.data.jpa.entity.dto.DeptDTO;
 import com.mfm.learn.spring.data.jpa.entity.dto.EmpDeptDto;
 import com.mfm.learn.spring.data.jpa.service.EmpService;
 
@@ -176,7 +177,32 @@ public class EmpServiceImpl implements EmpService {
             .setResultTransformer(Transformers.aliasToBean(EmpDeptDto.class))
             .list();
         dtos2.stream().forEach(System.out::println);
+
         return dtos2;
+    }
+
+    public List<DeptDTO> q3() {
+        //use  Hibernate specific features ResultTransformer+alias
+        Session session = (Session) this.em.getDelegate();
+        //JPQL+ResultTransformer+POJOs 必须起别名，不然不会设置值
+        List<EmpDeptDto> dtos1 = session
+            .createQuery(
+                "SELECT e.empNo as empNo, e.ename as ename,d.dname as departmentName FROM Emp e,Dept d where d.deptNo=e.deptNo")
+            .setResultTransformer(Transformers.aliasToBean(EmpDeptDto.class))
+            .list();
+        dtos1.stream().forEach(System.out::println);
+        List<DeptDTO> dtos2 = session
+            .createQuery("select d.loc,d.dname from Dept d")
+            .setResultTransformer(Transformers.aliasToBean(DeptDTO.class))
+            .list();
+        dtos2.stream().forEach(System.out::println);
+        //JPQL+ResultTransformer+POJOs 必须起别名，不然不会设置值
+        List<DeptDTO> dtos3 = session
+            .createQuery("select d.loc as loc,d.dname as dname from Dept d")
+            .setResultTransformer(Transformers.aliasToBean(DeptDTO.class))
+            .list();
+        dtos3.stream().forEach(System.out::println);
+        return dtos3;
     }
 
     public List<EmpDeptDto> getEmpDtoByHibernateHQL() {

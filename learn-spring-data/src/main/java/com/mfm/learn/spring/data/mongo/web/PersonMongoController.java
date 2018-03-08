@@ -46,4 +46,9 @@ public class PersonMongoController {
         return this.personMongoRepository.withQueryFindByAge(age);
     }
 
+    @RequestMapping("/q3")
+    public List<Person> q3() {
+        return this.personMongoRepository.findAll();
+    }
+
 }

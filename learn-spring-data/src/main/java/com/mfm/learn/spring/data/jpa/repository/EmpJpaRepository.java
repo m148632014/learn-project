@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.mfm.learn.spring.data.jpa.entity.Emp;
+import com.mfm.learn.spring.data.jpa.entity.dto.DeptDTO;
 import com.mfm.learn.spring.data.jpa.entity.dto.EmpDeptDto;
 import com.mfm.learn.spring.data.jpa.entity.projection.EmpDept;
 
@@ -20,6 +21,10 @@ import com.mfm.learn.spring.data.jpa.entity.projection.EmpDept;
  * @since 2017年7月26日
  */
 public interface EmpJpaRepository extends JpaRepository<Emp, Integer> {
+
+    @Query(value = "select e.empNo,e.ename from Emp e  where e.deptNo=deptNo")
+    List<Emp> findEmpDeptNo(@Param("deptNo") String deptNo);
+
     //默认 方式  返回所有字段
     @Query(
             value = "select e from Emp e,Dept d where e.deptNo=d.deptNo and d.dname=:dname")
@@ -93,5 +98,6 @@ public interface EmpJpaRepository extends JpaRepository<Emp, Integer> {
     List<EmpDeptDto> empDtoQuery();
 
     //dto-使用hibernate特性查询
-
+    @Query(value = "select d.loc as loc,d.dname as dname from Dept d")
+    List<DeptDTO> getDept();
 }
