@@ -4,170 +4,55 @@
 
 	<groupId>org.mfm.learn</groupId>
 	<artifactId>learn-activemq</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>learn-activemq Maven Webapp</name>
 
 	<url>http://maven.apache.org</url>
-
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.4.RELEASE</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.3.3.RELEASE</spring.version>
+		<java.version>1.8</java.version>
 	</properties>
-
+	
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+		<!-- ActiveMQ -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
-		<!-- Logs -->
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>1.7.21</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
-			<version>5.7.0</version>
+			<artifactId>activemq-spring</artifactId>
 		</dependency>
+		<!-- 测试 -->
 		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-spring</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-<!-- 	
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-stomp</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-client</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-pool</artifactId>
-		    <version>5.14.1</version>
-		</dependency> 
--->
-		<!-- 测试ActiveMQ -->
-		<dependency>
-		    <groupId>junit</groupId>
-		    <artifactId>junit</artifactId>
-		    <version>4.12</version>
-		</dependency>
- 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!-- 	
-		<dependency>
-		    <groupId>org.apache.activemq.tooling</groupId>
-		    <artifactId>activemq-junit</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-broker</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-stomp</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-client</artifactId>
-		    <version>5.14.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-pool</artifactId>
-		    <version>5.14.1</version>
-		</dependency> 
--->
+	    <!-- activemq test -->
+	    <dependency>
+	      <groupId>org.apache.activemq.tooling</groupId>
+	      <artifactId>activemq-junit</artifactId>
+	      <version>${activemq.version}</version>
+	      <scope>test</scope>
+	    </dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<encoding>utf-8</encoding>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
-				<configuration>
-					<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<!-- 重点是这个配置 -->
-					<warName>${project.artifactId}</warName>
-				</configuration>
-			</plugin>
-
-			<!-- start:clean jetty:run stop:直接点 红方块 -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.1.0.RC1</version>
-				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<webAppConfig>
-						<contextPath>/learn-activemq</contextPath>
-					</webAppConfig>
-				</configuration>
-			</plugin>
-
-			<!-- start:clean install cargo:run stop:cargo:stop -->
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.4.9</version>
-				<configuration>
-					<container>
-						<containerId>tomcat8x</containerId>
-						<home>D:\Tools\apache-tomcat-8.0.5</home>
-					</container>
-					<configuration>
-						<type>standalone</type>
-						<home>${project.build.directory}/tomcat8x</home>
-						<properties>
-							<cargo.servlet.port>8080</cargo.servlet.port>
-						</properties>
-					</configuration>
-				</configuration>
-			</plugin>
 		</plugins>
 
 		<finalName>learn-activemq</finalName>
