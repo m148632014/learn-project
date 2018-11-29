@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<!-- in the child (descendant) context -->
+	<!-- bean name is the same as the parent bean -->
+	<bean id="straightValuesBean" class="org.springframework.aop.framework.ProxyFactoryBean">
+	    <property name="target">
+	        <ref parent="straightValuesBean"/> <!-- notice how we refer to the parent bean -->
+	    </property>
+	    <!-- insert other configuration and dependencies as required here -->
+	</bean>
+	
+	
+	<!-- ======Bean基于构造函数的依赖注入（Constructor-based Dependency Injection）====== -->
+	<bean id="movieFinder" class="com.mfm.learn.spring.MovieFinder"/>
+	<bean  id="simpleMovieLister" class="com.mfm.learn.spring.SimpleMovieLister">
+		<constructor-arg ref="movieFinder"/>
+	</bean>
+	<!-- 构造函数参数解析 Constructor Argument Resolution -->
+	 <bean id="thingOne" class="com.mfm.learn.spring.ThingOne">
+        <constructor-arg ref="thingTwo"/>
+        <constructor-arg ref="thingThree"/>
+    </bean>
+    <bean id="thingTwo" class="com.mfm.learn.spring.ThingTwo"/>
+    <bean id="thingThree" class="com.mfm.learn.spring.ThingThree"/>
+	<!-- 构造函数参数类型匹配 Constructor argument type matching -->
+	<bean id="exampleBean1" class="com.mfm.learn.spring.ExampleBean">
+	    <constructor-arg type="int" value="7500000"/>
+	    <constructor-arg type="java.lang.String" value="42"/>
+	</bean>
+	<!-- 构造函数参数索引 Constructor argument index -->
+	<bean id="exampleBean2" class="com.mfm.learn.spring.ExampleBean">
+	    <constructor-arg index="0" value="7500000"/>
+	    <constructor-arg index="1" value="42"/>
+	</bean>
+	<!-- 构造函数参数名称 Constructor argument name -->
+	<bean id="exampleBean3" class="com.mfm.learn.spring.ExampleBean">
+	    <constructor-arg name="years" value="7500000"/>
+	    <constructor-arg name="ultimateAnswer" value="42"/>
+	</bean>
+		
+	<!-- ======Bean基于Setter的依赖注入（Setter-based Dependency Injection）====== -->
+	<bean  id="simpleMovieLister2" class="com.mfm.learn.spring.SimpleMovieLister">
+		<property name="movieFinder"  ref="movieFinder"/>
+	</bean>
+</beans>

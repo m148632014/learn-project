@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="classic" class="com.mfm.learn.spring.PnamespaceAndCnamespaceBean">
+        <property name="email" value="someone@somewhere.com"/>
+    </bean>
+
+    <bean name="pnamespace" class="com.mfm.learn.spring.PnamespaceAndCnamespaceBean"
+        p:email="someone@somewhere.com"/>
+        
+     <bean name="john-classic" class="com.mfm.learn.spring.Person">
+        <property name="name" value="John Doe"/>
+        <property name="spouse" ref="jane"/>
+    </bean>
+
+    <bean name="john-modern"
+        class="com.mfm.learn.spring.Person"
+        p:name="John Doe"
+        p:spouse-ref="jane"/>
+
+    <bean name="jane" class="com.mfm.learn.spring.Person">
+        <property name="name" value="Jane Doe"/>
+    </bean>
+    
+    
+    
+     <bean id="thingOne" class="com.mfm.learn.spring.CnamespaceThingOne"/>
+    <bean id="thingTwo" class="com.mfm.learn.spring.CnamespaceThingTwo"/>
+    <bean id="thingThree" class="com.mfm.learn.spring.CnamespaceThingThree"/>
+
+    <!-- traditional declaration -->
+    <bean id="thingOne1" class="com.mfm.learn.spring.CnamespaceThingOne">
+        <constructor-arg ref="thingTwo"/>
+        <constructor-arg ref="thingThree"/>
+        <constructor-arg value="something@somewhere.com"/>
+    </bean>
+
+    <!-- c-namespace declaration -->
+    <bean id="thingOne2" class="com.mfm.learn.spring.CnamespaceThingOne" c:thingTwo-ref="thingTwo" c:thingThree-ref="thingThree" c:email="something@somewhere.com"/>
+    
+    <!-- c-namespace index declaration -->
+    <bean id="thingOne3" class="com.mfm.learn.spring.CnamespaceThingOne" c:_0-ref="thingTwo" c:_1-ref="thingThree"/>
+    
+       
+</beans>

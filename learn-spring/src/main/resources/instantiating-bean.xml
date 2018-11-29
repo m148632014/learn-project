@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 使用构造函数实例化（Instantiation with a Constructor） -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" />
+	<bean name="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource" />
+    <!-- 使用静态工厂方法实例化 （Instantiation by Using an Instance Factory Method） -->
+	<bean id="instantiatingBean" class="com.mfm.learn.spring.InstantiatingBean" factory-method="createInstance" />
+	<!-- 使用实例工厂方法实例化（Instantiation by Using an Instance Factory Method） -->
+	<bean id="serviceLocator" class="com.mfm.learn.spring.DefaultServiceLocator"/>
+	<bean id="clientService"
+	    factory-bean="serviceLocator"
+	    factory-method="createClientServiceInstance"/>
+	<bean id="accountService"
+	    factory-bean="serviceLocator"
+	    factory-method="createAccountServiceInstance"/>
+	
+</beans>

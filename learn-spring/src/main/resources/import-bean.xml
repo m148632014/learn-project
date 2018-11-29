@@ -1,0 +1,17 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 如您所见，忽略前导斜杠。有没有/都是一样的。鉴于这些路径是相对的，最好不要使用斜杠。 --> 
+    <import resource="/inner-bean.xml"/>
+    <import resource="straight-values-bean.xml"/>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	    <!-- results in a setDriverClassName(String) call -->
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://10.255.33.108:3306/keplerdb-2"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="123456"/>
+	</bean>
+
+</beans>
