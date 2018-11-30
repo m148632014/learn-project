@@ -1,0 +1,13 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd"
+    >
+	<bean id="lazy" class="com.mfm.learn.spring.ExpensiveToCreateBean" lazy-init="true"/>
+	<bean name="not.lazy" class="com.mfm.learn.spring.AnotherBean"/>
+     
+	<bean id="lazyBean" class="com.mfm.learn.spring.ExpensiveToCreateBean" lazy-init="true"/>
+     <bean name="refLazyBean" class="com.mfm.learn.spring.AnotherRefBean">
+     	<property name="lazyBean" ref="lazyBean"></property>
+     </bean>
+</beans>

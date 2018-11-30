@@ -1,0 +1,15 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="beanOne" class="com.mfm.learn.spring.DependsOnBeanExampleBean" depends-on="manager"/>
+    <bean id="manager" class="com.mfm.learn.spring.DependsOnBeanManagerBean" />
+	<bean id="accountDao" class="com.mfm.learn.spring.DependsOnBeanJdbcAccountDao" />
+
+	<bean id="beanOne2" class="com.mfm.learn.spring.DependsOnBeanExampleBean" depends-on="manager,accountDao">
+	    <property name="manager" ref="manager" />
+	</bean>
+	
+
+</beans>

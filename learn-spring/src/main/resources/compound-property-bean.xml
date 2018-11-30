@@ -1,0 +1,18 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="someone" class="com.mfm.learn.spring.CompoundPropertyBean">
+	    <property name="people" ref="fred"/>
+	    <property name="people.friend.name" value="Bob" />
+	</bean>
+
+    <bean id="fred" class="com.mfm.learn.spring.People">
+	    <property name="name" value="Fred" />
+	    <property name="friend" ref="bob"/>
+	</bean>
+    <bean id="bob" class="com.mfm.learn.spring.People">
+	</bean>
+
+</beans>
