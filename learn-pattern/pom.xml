@@ -5,7 +5,10 @@
   <groupId>org.mfm.learn</groupId>
   <artifactId>learn-pattern</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <modules>
+        <module>../learn-jvm</module>
+    </modules>
+    <packaging>pom</packaging>
 
   <name>learn-pattern</name>
   <url>http://maven.apache.org</url>

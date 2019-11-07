@@ -4,4 +4,4 @@
 *.iml
 .settings
 *.pmd
-/.idea
+*.classpath

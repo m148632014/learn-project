@@ -12,9 +12,13 @@
     <modules>
         <module>learn-springhateoas</module>
         <module>learn-spring-data</module>
-        <module>learn-springboot</module>
         <module>learn-pattern</module>
         <module>learn-ajax</module>
+        <module>learn-rabbitmq</module>
+        <module>learn-spring</module>
+        <module>learn-java8</module>
+        <module>learn-quartz</module>
+        <module>learn-volatile</module>
         <module>learn-activemq</module>
     </modules>
 
