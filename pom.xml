@@ -18,6 +18,7 @@
         <module>learn-spring</module>
         <module>learn-java8</module>
         <module>learn-quartz</module>
+        <module>learn-jvm</module>
         <module>learn-volatile</module>
         <module>learn-activemq</module>
     </modules>
