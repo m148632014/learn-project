@@ -15,7 +15,7 @@ public class MyJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext ctx)
             throws JobExecutionException {
         JobDataMap jobDataMap = ctx.getMergedJobDataMap();
-        MyJob.log.info("hello,"+jobDataMap.get("JOB_NAME")+",I'am "+ctx.getTrigger().getKey());
+        log.info("MyJob hello Redis! I'm " +jobDataMap.get("JOB_NAME"));
     }
 
 }

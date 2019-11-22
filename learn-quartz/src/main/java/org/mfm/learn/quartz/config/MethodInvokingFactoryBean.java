@@ -21,7 +21,7 @@ public class MethodInvokingFactoryBean
     private BeanFactory beanFactory;
     private transient Method targetMethod;
     private transient Object targetObject;
-    private transient String factoryClassName = "org.mfm.learn.quartz.config.FixSerialIdListableBeanFactory";
+    private transient String factoryClassName = FixSerialIdListableBeanFactory.class.getName();
     private transient boolean requestRecover;
 
     public void setFactoryClassName(String factoryClassName) {

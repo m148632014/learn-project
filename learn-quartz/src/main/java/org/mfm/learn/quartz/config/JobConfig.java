@@ -5,20 +5,15 @@ import java.util.Date;
 import org.mfm.learn.quartz.job.MyJob;
 import org.mfm.learn.quartz.job.MyJob2;
 import org.mfm.learn.quartz.job.MyJob3;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.JobBuilder;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import org.quartz.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 
 @Configuration
 public class JobConfig {
-
 
     @Bean
     public JobDetail myJobDetail() {
@@ -33,7 +28,7 @@ public class JobConfig {
     public Trigger myJobTrigger(JobDetail myJobDetail) {
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("MyTrigger", "MyGroup")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/15 * * * * ?"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("0/13 * * * * ?"))
                 .forJob(myJobDetail).build();
         return trigger;
     }
@@ -42,24 +37,29 @@ public class JobConfig {
     @Bean
     public MethodInvokingFactoryBean myJobDetail2(MyJob2 myJob2){
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
-        methodInvokingFactoryBean.setTargetObject(myJob2);
-        methodInvokingFactoryBean.setTargetMethod("execute");
-        return  methodInvokingFactoryBean;
+        methodInvokingFactoryBean.setTargetObjectName("myJob2");
+        methodInvokingFactoryBean.setTargetMethodName("execute");
+        return methodInvokingFactoryBean;
     }
 
 
     @Bean
-    public Trigger myJobTrigger2(MethodInvokingFactoryBean myJobDetail2) {
-        Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("MyTrigger2", "MyGroup")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
-                .forJob((JobDetail) myJobDetail2).build();
-        return trigger;
+    public CronTriggerFactoryBean myJobTrigger2(JobDetail myJobDetail2) {
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("JOB_NAME", "MyJob2");
+        CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
+        cronTriggerFactoryBean.setJobDetail(myJobDetail2);
+        cronTriggerFactoryBean.setCronExpression("0/14 * * * * ?");
+        cronTriggerFactoryBean.setGroup(Scheduler.DEFAULT_GROUP);
+        cronTriggerFactoryBean
+                .setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
+        cronTriggerFactoryBean.setJobDataMap(jobDataMap);
+        return cronTriggerFactoryBean;
     }
 
 
     @Bean
-    public JobDetail myJobDetail3(MyJob2 myJob2){
+    public JobDetail myJobDetail3(){
         JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("JOB_NAME", "MyJob3");
         return JobBuilder.newJob(MyJob3.class).withIdentity("MyJob3")
@@ -71,7 +71,7 @@ public class JobConfig {
     public Trigger myJobTrigger3(JobDetail myJobDetail3) {
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("MyTrigger3", "MyGroup")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("0/15 * * * * ?"))
                 .forJob(myJobDetail3).build();
         return trigger;
     }
