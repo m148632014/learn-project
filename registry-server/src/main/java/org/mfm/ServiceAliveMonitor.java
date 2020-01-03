@@ -53,7 +53,6 @@ public class ServiceAliveMonitor {
                         for (ServiceInstance serviceInstance : serviceInstanceMap
                             .values()) {
                             if (!serviceInstance.isAlive()) {
-                                System.out.println("");
                                 this.registry.remove(
                                     serviceInstance.getServiceName(),
                                     serviceInstance.getServiceInstanceId());
