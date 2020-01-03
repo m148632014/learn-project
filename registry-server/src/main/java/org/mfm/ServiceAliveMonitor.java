@@ -18,7 +18,12 @@ public class ServiceAliveMonitor {
     /**
      * 负责监控微服务存活状态的线程
      */
-    private Daemon daemon = new Daemon();
+    private Daemon daemon;
+
+    public ServiceAliveMonitor() {
+        this.daemon = new Daemon(); //daemon线程我一般叫后台线程 ，main等其他线程setDaemon默认是false，我一般称为工作线程
+        this.daemon.setDaemon(true); //daemon线程不会阻止JVM进程退出的
+    }
 
     /**
      * 启动后台线程

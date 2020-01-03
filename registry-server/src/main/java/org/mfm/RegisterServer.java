@@ -30,6 +30,8 @@ public class RegisterServer {
         ServiceAliveMonitor serviceAliveMonitor = new ServiceAliveMonitor();
         serviceAliveMonitor.start();
 
+        //register-server主要有很多核心工作线程接受和处理register-client发送的请求，默认不是后台线程的话，JVM不会退出的
+        //由于没有网络，这里while保证main工作线程不会退出，这样就算其他线程是daemon也不会退出
         while (true) {
             Thread.sleep(30 * 1000);
         }
